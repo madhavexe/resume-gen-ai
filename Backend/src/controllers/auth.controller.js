@@ -143,6 +143,7 @@ const logoutUserController = async (req, res) => {
 const getMeController = async (req, res) => {
 
     // it stores current logged in user's data
+    
     const user = await userModel.findById(req.user.id)
 
     res.status(200).json({
