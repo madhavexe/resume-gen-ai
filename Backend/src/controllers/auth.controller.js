@@ -133,6 +133,8 @@ const loginUserController = async (req, res) => {
  */
 const logoutUserController = async (req, res) => {
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     // getting token from cookies
     const token = req.cookies.token
 
