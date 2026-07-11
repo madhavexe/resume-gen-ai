@@ -66,6 +66,8 @@ const Interview = () => {
     const { handleLogout } = useAuth()
     const { interviewId } = useParams()
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (interviewId) {
             getReportById(interviewId)
