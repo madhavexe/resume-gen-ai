@@ -1,15 +1,45 @@
-const express = require('express')
-const authMiddleware = require('../middlewares/auth.middleware')
-const interviewController = require('../controllers/interview.controller')
-const upload = require('../middlewares/file.middleware')
+const express = require("express")
+const authMiddleware = require("../middlewares/auth.middleware")
+const interviewController = require("../controllers/interview.controller")
+const upload = require("../middlewares/file.middleware")
 
 const interviewRouter = express.Router()
 
+
+
 /**
- * @route api/interview/
- * @description generate a new report on the basis of resume pdf, self-description and job-description provided by user
- * @access Private
+ * @route POST /api/interview/
+ * @description generate new interview report on the basis of user self description,resume pdf and job description.
+ * @access private
  */
-interviewRouter.post('/', authMiddleware.authUser, upload.single('resume'), interviewController.generateInterviewReportController)
+interviewRouter.post("/", authMiddleware.authUser, upload.single("resume"), interviewController.generateInterViewReportController)
+
+/**
+ * @route GET /api/interview/report/:interviewId
+ * @description get interview report by interviewId.
+ * @access private
+ */
+interviewRouter.get("/report/:interviewId", authMiddleware.authUser, interviewController.getInterviewReportByIdController)
+
+/**
+ * @route GET /api/interview/
+ * @description get all interview reports of logged in user.
+ * @access private
+ */
+interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInterviewReportsController)
+
+/**
+ * @route DELETE /api/interview/:interviewId
+ * @description delete a specific interview report by interviewId.
+ * @access private
+ */
+interviewRouter.delete("/:interviewId", authMiddleware.authUser, interviewController.deleteInterviewReportController)
+
+/**
+ * @route DELETE /api/interview/
+ * @description delete all interview reports of logged in user.
+ * @access private
+ */
+interviewRouter.delete("/", authMiddleware.authUser, interviewController.deleteAllInterviewReportsController)
 
 module.exports = interviewRouter

@@ -2,6 +2,7 @@ import '../auth.form.scss'
 import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 import { useState } from 'react'
+import LoadingSpinner from '../../../components/LoadingSpinner'
  
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
     }
 
     if (loading) {
-        return <main><h1>Loading.......</h1></main>
+        return <LoadingSpinner message="Logging in..." />
     }
 
     return (

@@ -52,7 +52,13 @@ const registerUserController = async (req, res) => {
     )
 
     // setting token in cookie
-    res.cookie('token', token)
+    // res.cookie('token', token)
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,          // true only in production with HTTPS
+    sameSite: "lax",
+    maxAge: 24 * 60 * 60 * 1000
+});
 
     res.status(201).json({
         message: "User registered successfully",
@@ -98,7 +104,13 @@ const loginUserController = async (req, res) => {
     )
 
     // setting token into cookies
-    res.cookie('token', token)
+    // res.cookie('token', token)
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,          // true only in production with HTTPS
+    sameSite: "lax",
+    maxAge: 24 * 60 * 60 * 1000
+});
 
     res.status(200).json({
         message: 'User Logged In successfully',
@@ -127,7 +139,12 @@ const logoutUserController = async (req, res) => {
     }
 
     // clearing token from cookies
-    res.clearCookie('token')
+    // res.clearCookie('token')
+    res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax"
+});
 
     res.status(200).json({
         message: 'User logged out successfully'

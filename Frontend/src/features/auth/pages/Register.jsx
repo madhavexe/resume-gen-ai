@@ -1,6 +1,7 @@
 import { useNavigate, Link } from 'react-router'
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 
 const Register = () => {
 
@@ -20,7 +21,7 @@ const Register = () => {
     }
 
     if (loading) {
-        return <main><h1>Loading.......</h1></main>
+        return <LoadingSpinner message="Creating your account..." />
     }
 
     return (
