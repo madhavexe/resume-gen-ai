@@ -52,13 +52,15 @@ const registerUserController = async (req, res) => {
     )
 
     // setting token in cookie
-    // res.cookie('token', token)
+
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
-    httpOnly: true,
-    secure: false,          // true only in production with HTTPS
-    sameSite: "lax",
-    maxAge: 24 * 60 * 60 * 1000
-});
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
         message: "User registered successfully",
@@ -104,13 +106,14 @@ const loginUserController = async (req, res) => {
     )
 
     // setting token into cookies
-    // res.cookie('token', token)
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
-    httpOnly: true,
-    secure: false,          // true only in production with HTTPS
-    sameSite: "lax",
-    maxAge: 24 * 60 * 60 * 1000
-});
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
         message: 'User Logged In successfully',
@@ -139,12 +142,11 @@ const logoutUserController = async (req, res) => {
     }
 
     // clearing token from cookies
-    // res.clearCookie('token')
     res.clearCookie("token", {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax"
-});
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
+    });
 
     res.status(200).json({
         message: 'User logged out successfully'
@@ -160,7 +162,7 @@ const logoutUserController = async (req, res) => {
 const getMeController = async (req, res) => {
 
     // it stores current logged in user's data
-    
+
     const user = await userModel.findById(req.user.id)
 
     res.status(200).json({
